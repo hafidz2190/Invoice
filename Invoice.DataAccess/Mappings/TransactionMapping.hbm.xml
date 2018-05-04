@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Invoice.Model" namespace="Invoice.Model">
+    <class name="TransactionModel" table="[Transaction]">
+        <id name="Id" column="Id" type="Guid">
+            <generator class="guid.comb" />
+        </id>
+        <property name="CreatedTime" column="P_CreatedTime" index="Idx_CreatedTime" />
+        <property name="ModifiedTime" column="P_ModifiedTime" index="Idx_ModifiedTime" />
+        <property name="Username" column="P_Username" index="Idx_Username" />
+        <property name="InvoiceContent" column="C_InvoiceContent" index="Idx_C_InvoiceContent" />
+        <property name="Total" column="C_Total" index="Idx_C_Total" />
+    </class>
+</hibernate-mapping>
