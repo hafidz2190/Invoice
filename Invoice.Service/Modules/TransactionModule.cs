@@ -33,7 +33,9 @@ namespace Invoice.Service
 
                 var invoiceModel = JsonConvert.DeserializeObject<InvoiceModel>(body);
 
-                return transactionManager.CreateTransaction(invoiceModel);
+                var result = transactionManager.CreateTransaction(invoiceModel);
+
+                return Response.AsJson(result, HttpStatusCode.OK);
             };
         }
     }
