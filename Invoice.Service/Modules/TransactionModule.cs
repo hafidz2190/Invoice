@@ -2,6 +2,7 @@
 using Invoice.Model;
 using Nancy;
 using Newtonsoft.Json;
+using System;
 
 namespace Invoice.Service
 {
@@ -23,19 +24,26 @@ namespace Invoice.Service
 
             Post["/CreateTransactionFromInvoice"] = _ =>
             {
-                var stream = Request.Body;
-                var length = Request.Body.Length;
+                try
+                {
+                    var stream = Request.Body;
+                    var length = Request.Body.Length;
 
-                var data = new byte[length];
-                stream.Read(data, 0, (int)length);
+                    var data = new byte[length];
+                    stream.Read(data, 0, (int)length);
 
-                var body = System.Text.Encoding.Default.GetString(data);
+                    var body = System.Text.Encoding.Default.GetString(data);
 
-                var invoiceModel = JsonConvert.DeserializeObject<InvoiceModel>(body);
+                    var invoiceModel = JsonConvert.DeserializeObject<InvoiceModel>(body);
 
-                var result = transactionManager.CreateTransaction(invoiceModel);
+                    var result = transactionManager.CreateTransaction(invoiceModel);
 
-                return Response.AsJson(result, HttpStatusCode.OK);
+                    return Response.AsJson(result, HttpStatusCode.OK);
+                }
+                catch (Exception e)
+                {
+                    return Response.AsJson(e, HttpStatusCode.InternalServerError);
+                }
             };
         }
     }
